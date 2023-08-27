@@ -1,0 +1,65 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid aaafc405-dfd0-4c08-8975-e896eb1f77b3)
+
+  (paper "A4")
+
+  (lib_symbols
+  )
+
+
+  (sheet (at 82.55 62.23) (size 27.94 59.69) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 504c6cb5-409e-48b4-8a7d-19585f7d5c48)
+    (property "Sheetname" "PowerMonitor" (at 82.55 61.5184 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "PowerMonitor.kicad_sch" (at 82.55 122.5046 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "power_monitor"
+        (path "/aaafc405-dfd0-4c08-8975-e896eb1f77b3" (page "4"))
+      )
+    )
+  )
+
+  (sheet (at 182.88 97.79) (size 24.13 21.59) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 765f25d5-ba72-42cd-a440-33e53dc181e9)
+    (property "Sheetname" "SecondFloorFuse" (at 182.88 97.0784 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "SecondFloor.kicad_sch" (at 182.88 119.9646 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "power_monitor"
+        (path "/aaafc405-dfd0-4c08-8975-e896eb1f77b3" (page "2"))
+      )
+    )
+  )
+
+  (sheet (at 182.88 63.5) (size 24.13 20.32) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 79683c67-7ff2-4fe7-b6cd-c4b1cfd79ce7)
+    (property "Sheetname" "FirstFloorFuse" (at 182.88 62.7884 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "FirstFloor.kicad_sch" (at 182.88 84.4046 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "power_monitor"
+        (path "/aaafc405-dfd0-4c08-8975-e896eb1f77b3" (page "3"))
+      )
+    )
+  )
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)

@@ -1,0 +1,217 @@
+{
+	"format": 2,
+	"timezone": "1",
+	"update": "MINOR",
+	"device": {
+		"name": "IotaWatt",
+		"version": 3,
+		"channels": "15",
+		"burden": [
+			0,
+			20,
+			20,
+			20,
+			20,
+			20,
+			20,
+			20,
+			20,
+			20,
+			20,
+			20,
+			20,
+			20,
+			20
+		]
+	},
+	"inputs": [
+		{
+			"channel": 0,
+			"name": "Input_0",
+			"type": "VT",
+			"model": "Ideal 77DE-06-09(EU)",
+			"cal": 19.06
+		},
+		null,
+		{
+			"channel": 2,
+			"name": "komfyr",
+			"type": "CT",
+			"model": "AcuCT-H040-50",
+			"phase": 1,
+			"turns": 1000,
+			"cal": 50
+		},
+		null,
+		null,
+		null,
+		{
+			"channel": 6,
+			"name": "vv_tank",
+			"type": "CT",
+			"model": "AcuCT-H040-50",
+			"phase": 1,
+			"turns": 1000,
+			"cal": 50
+		},
+		{
+			"channel": 7,
+			"name": "Entre_2etg",
+			"type": "CT",
+			"model": "AcuCT-H040-50",
+			"phase": 1,
+			"turns": 1000,
+			"cal": 50
+		},
+		{
+			"channel": 8,
+			"name": "ventilasjon",
+			"type": "CT",
+			"model": "AcuCT-H040-50",
+			"phase": 1,
+			"turns": 1000,
+			"cal": 50
+		},
+		{
+			"channel": 9,
+			"name": "sentralst",
+			"type": "CT",
+			"model": "AcuCT-H040-50",
+			"phase": 1,
+			"turns": 1000,
+			"cal": 50
+		},
+		{
+			"channel": 10,
+			"name": "bad_kon_trapp",
+			"type": "CT",
+			"model": "AcuCT-H040-50",
+			"phase": 1,
+			"turns": 1000,
+			"cal": 50
+		},
+		{
+			"channel": 11,
+			"name": "rs_garasje",
+			"type": "CT",
+			"model": "AcuCT-H040-50",
+			"phase": 1,
+			"turns": 1000,
+			"cal": 50
+		},
+		{
+			"channel": 12,
+			"name": "vf_sov1_bad",
+			"type": "CT",
+			"model": "AcuCT-H040-50",
+			"phase": 1,
+			"turns": 1000,
+			"cal": 50
+		},
+		{
+			"channel": 13,
+			"name": "sov23_gang_kj",
+			"type": "CT",
+			"model": "AcuCT-H040-50",
+			"phase": 1,
+			"turns": 1000,
+			"cal": 50
+		},
+		{
+			"channel": 14,
+			"name": "komf",
+			"type": "CT",
+			"model": "AcuCT-H040-50",
+			"phase": 1,
+			"turns": 1000,
+			"cal": 50
+		}
+	],
+	"outputs": [],
+	"dstrule": {
+		"adj": 60,
+		"utc": true,
+		"begin": {
+			"month": 3,
+			"weekday": 1,
+			"instance": -1,
+			"time": 60
+		},
+		"end": {
+			"month": 10,
+			"weekday": 1,
+			"instance": -1,
+			"time": 60
+		}
+	},
+	"influxdb2": {
+		"type": "influxdb2",
+		"revision": 14,
+		"postInterval": 5,
+		"bulksend": 6,
+		"url": "http://192.168.50.37:8086",
+		"bucket": "Home",
+		"token": "",
+		"orgid": "4f37428e4085d8e2",
+		"tagset": [],
+		"outputs": [
+			{
+				"name": "input",
+				"units": "Volts",
+				"script": "@0"
+			},
+			{
+				"name": "Nede_komfyr_wt",
+				"units": "Wh",
+				"script": "@14"
+			},
+			{
+				"name": "Nede_sentrals_wt",
+				"units": "Wh",
+				"script": "@9"
+			},
+			{
+				"name": "Nede_sov23_gang_kj_wt",
+				"units": "Wh",
+				"script": "@13"
+			},
+			{
+				"name": "Nede_vf_sov1_bad_wt",
+				"units": "Wh",
+				"script": "@12"
+			},
+			{
+				"name": "Nede_vv_tank_wt",
+				"units": "Wh",
+				"script": "@6"
+			},
+			{
+				"name": "Oppe_badkontortrapp_wt",
+				"units": "Wh",
+				"script": "@10"
+			},
+			{
+				"name": "Oppe_entre_2etg_wt",
+				"units": "Wh",
+				"script": "@7"
+			},
+			{
+				"name": "Oppe_garasje_wt",
+				"units": "Wh",
+				"script": "@11"
+			},
+			{
+				"name": "Oppe_komfyr_wt",
+				"units": "Wh",
+				"script": "@2"
+			},
+			{
+				"name": "Oppe_vent_wt",
+				"units": "Wh",
+				"script": "@8"
+			}
+		],
+		"authtoken": "azEnZHCUW24OFSszKP7x1JagkdfUCJeIA-0lduU-jzHhS-zDXu9FyQ9R6ICXdT8Q92GeQmgbBYIF_lNgU-PScQ==",
+		"begdate": 1667257200
+	}
+}

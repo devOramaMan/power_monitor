@@ -1,0 +1,23 @@
+{
+    "DataSources":
+    [
+        {
+            "dbName":"InfluxDB",
+            "QueryLanguage":"Flux",
+            "Url":"http://192.168.10.137:8086",
+            "AllowedCookies": null,
+            "Timeout":null,
+            "BasicAuth":true,
+            "TLSClientAuth":false,
+            "SkipTLSVerify":false,
+            "ForwardOAuthId":false,
+            "User":"influx",
+            "Password":"configured",
+            "Organization":"4f37428e4085d8e2",
+            "Token":"configured",
+            "DefaultBucket":"Home",
+            "MinTimeInterval":10,
+            "MaxSeries":1000
+        }
+    ]
+}

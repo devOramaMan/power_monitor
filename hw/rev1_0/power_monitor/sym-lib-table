@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "power_monitor-eagle-import")(type "KiCad")(uri "${KIPRJMOD}/power_monitor-eagle-import.kicad_sym")(options "")(descr ""))
+)

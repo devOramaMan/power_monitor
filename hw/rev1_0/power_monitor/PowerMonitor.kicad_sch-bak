@@ -1,0 +1,27 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid 9adbb663-ec3a-4a36-96c0-afa0a0c14846)
+
+  (paper "A4")
+
+  (lib_symbols
+  )
+
+
+  (sheet (at 52.07 123.19) (size 35.56 33.02) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 3db3fbd7-ef84-4aa5-98d3-dafb40f2bd54)
+    (property "Sheetname" "Iotawatt" (at 52.07 122.4784 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "Iotawatt.kicad_sch" (at 52.07 156.7946 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "power_monitor"
+        (path "/aaafc405-dfd0-4c08-8975-e896eb1f77b3/504c6cb5-409e-48b4-8a7d-19585f7d5c48" (page "5"))
+      )
+    )
+  )
+)

@@ -1,0 +1,621 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 7,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "0u3H7Fh4k"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 7,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nede_komfyr_wt value"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#73BF69",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "displayName",
+                "value": "Kitchen Stove"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nede_vv_tank_wt value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Water Boiler"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nede_vf_sov1_bad_wt value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Hallway - Bathroom - Bedroom 1"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nede_sov23_gang_kj_wt value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Hall -  Bedroom 2-3 -  Kitchen"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Oppe_vent_wt value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Ventilation"
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Kitchen Stove"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 18,
+        "x": 0,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "timezone": [
+          "Europe/Oslo"
+        ],
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "irZIq3O4k"
+          },
+          "key": "Q-9c2078aa-2728-4e66-aa63-2809a2762d62-0",
+          "query": "from(bucket: \"Home\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"Nede_vf_sov1_bad_wt\" or   \r\n    r._measurement == \"Nede_sov23_gang_kj_wt\"  or   \r\n    r._measurement == \"Nede_vv_tank_wt\"  or   \r\n    r._measurement == \"Nede_komfyr_wt\" or    \r\n    r._measurement == \"Oppe_vent_wt\")\r\n\r\n  |> map(fn: (r) => ({\r\n      r with\r\n      _value: if r._measurement == \"Oppe_vent_wt\" or \r\n      r._measurement == \"Nede_vv_tank_wt\" \r\n      then r._value / 2.0\r\n      else r._value\r\n    }))\r\n\r\n   |> aggregateWindow(every: v.windowPeriod, fn: sum)\r\n    ",
+          "refId": "A"
+        }
+      ],
+      "title": "Circuits consumption in selected timespan",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {}
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "0u3H7Fh4k"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 90
+              },
+              {
+                "color": "#6ED0E0",
+                "value": 1000
+              },
+              {
+                "color": "#EF843C",
+                "value": 10000
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.2.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "irZIq3O4k"
+          },
+          "query": "from(bucket: \"Home\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"Nede_vf_sov1_bad_wt\"  or   \n    r._measurement == \"Nede_sov23_gang_kj_wt\"  or   \n    r._measurement == \"Nede_vv_tank_wt\"  or   \n    r._measurement == \"Nede_komfyr_wt\" or\n    r._measurement == \"Oppe_vent_wt\" )\n\n   |> map(fn: (r) => ({\n      r with\n      _value: if r._measurement == \"Oppe_vent_wt\" or \n      r._measurement == \"Nede_vv_tank_wt\" \n      then r._value / 2.0\n      else r._value\n    }))\n\n   |> aggregateWindow(every: v.windowPeriod, fn: sum)\n\n  ",
+          "refId": "A"
+        }
+      ],
+      "title": "Total Wh in selected timespan",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "value Nede_komfyr_wt",
+                "value Nede_sentrals_wt",
+                "value Nede_sov23_gang_kj_wt",
+                "value Nede_vf_sov1_bad_wt",
+                "value Nede_vv_tank_wt"
+              ],
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "0u3H7Fh4k"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 43,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 9,
+        "x": 0,
+        "y": 6
+      },
+      "id": 9,
+      "options": {
+        "barRadius": 0.15,
+        "barWidth": 0.36,
+        "colorByField": "Total",
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": false
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "normal",
+        "text": {},
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "xField": "Time",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "9.2.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "0u3H7Fh4k"
+          },
+          "hide": false,
+          "query": "from(bucket: \"Home\")\r\n  |> range(start: -6mo)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"Nede_vf_sov1_bad_wt\"  or   \r\n    r._measurement == \"Nede_sov23_gang_kj_wt\"  or   \r\n    r._measurement == \"Nede_vv_tank_wt\" or\r\n    r._measurement == \"Nede_komfyr_wt\"  or \r\n    r._measurement == \"Oppe_vent_wt\" )\r\n\r\n  |> map(fn: (r) => ({\r\n      r with\r\n      _value: if r._measurement == \"Oppe_vent_wt\" or \r\n      r._measurement == \"Nede_vv_tank_wt\" \r\n      then r._value / 2.0\r\n      else r._value\r\n    }))\r\n\r\n   |> aggregateWindow(every: 1mo, fn: sum)\r\n\r\n  ",
+          "refId": "A"
+        }
+      ],
+      "title": "Monthly consumption all circuits",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Total",
+            "mode": "reduceRow",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "0u3H7Fh4k"
+      },
+      "description": "Water boiler expenses are shared",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 43,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 9,
+        "x": 9,
+        "y": 6
+      },
+      "id": 10,
+      "options": {
+        "barRadius": 0.15,
+        "barWidth": 0.36,
+        "colorByField": "Total",
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": false
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "normal",
+        "text": {},
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "xField": "Time",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "9.2.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "0u3H7Fh4k"
+          },
+          "hide": false,
+          "query": "from(bucket: \"Home\")\r\n  |>  range(start: -6mo)\r\n  |> filter(fn: (r) => \r\n    r._measurement == \"Nede_vv_tank_wt\")\r\n\r\n   |> map(fn: (r) => ({\r\n      r with\r\n      _value: if r._measurement == \"Oppe_vent_wt\" or \r\n      r._measurement == \"Nede_vv_tank_wt\" \r\n      then r._value / 2.0\r\n      else r._value\r\n    }))\r\n\r\n   |> aggregateWindow(every: 1mo, fn: sum)\r\n\r\n  ",
+          "refId": "A"
+        }
+      ],
+      "title": "Monthly consumption water boiler circuit ",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Total",
+            "mode": "reduceRow",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "0u3H7Fh4k"
+      },
+      "description": "Water boiler expenses are shared",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 90
+              },
+              {
+                "color": "#6ED0E0",
+                "value": 1000
+              },
+              {
+                "color": "#EF843C",
+                "value": 10000
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 6
+      },
+      "id": 11,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "9.2.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "irZIq3O4k"
+          },
+          "query": "from(bucket: \"Home\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"Nede_vv_tank_wt\")\n\n  |> map(fn: (r) => ({\n      r with\n      _value: if r._measurement == \"Oppe_vent_wt\" or \n      r._measurement == \"Nede_vv_tank_wt\" \n      then r._value / 2.0\n      else r._value\n    }))\n\n   |> aggregateWindow(every: v.windowPeriod, fn: sum)\n\n  ",
+          "refId": "A"
+        }
+      ],
+      "title": "Wh water boiler in selected timespan",
+      "transformations": [],
+      "type": "gauge"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Sokkel_1.1",
+  "uid": "4i2vz4C4z",
+  "version": 13,
+  "weekStart": ""
+}
