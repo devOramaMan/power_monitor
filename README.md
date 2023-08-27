@@ -1,5 +1,5 @@
 <h1>Household Power Monitor</h1>
-<p>The following contains explanatory to setup our household power monitor. It is used to get a overview of current consumption in out apartment and our rental apartment.</p>
+<p>The following contains explanatory to setup our household power monitor. It is used to get a overview of current consumption in our apartment and the apartment under.</p>
 
 ![sokkel](./sokkel.png)
 
@@ -14,7 +14,8 @@
 <li>./iotawatt/config.txt</li>
 
 <h5>RPI installation:</h5>
-```
+
+```shell
 wget -O- https://packages.grafana.com/gpg.key | gpg --dearmor | sudo tee /usr/share/keyrings/grafana-archive-keyring.gpg >/dev/null
 echo "deb [signed-by=/usr/share/keyrings/grafana-archive-keyring.gpg] https://packages.grafana.com/oss/deb stable main" | sudo tee /etc/apt/sources.list.d/grafana.list
 sudo apt update && sudo apt install -y grafana
@@ -40,8 +41,8 @@ export DISTRIB_ID=$(lsb_release -si); export DISTRIB_CODENAME=$(lsb_release -sc)
 echo "deb [signed-by=/etc/apt/trusted.gpg.d/influxdb.gpg] https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list > /dev/null
 sudo apt-get update && sudo apt-get install influxdb2
 sudo /usr/share/influxdb/influxdb2-upgrade.sh
-
 ```
+
 <h5>Grafana configuration:</h5>
 <li>./grafana/db_config.json</li>
 <li>./grafana/Sokkel_1.1-1693041894446.json</li>
