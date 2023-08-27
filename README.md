@@ -42,7 +42,6 @@ sudo apt-get update && sudo apt-get install influxdb2
 sudo /usr/share/influxdb/influxdb2-upgrade.sh
 
 ```
-
 <h5>Grafana configuration:</h5>
 <li>./grafana/db_config.json</li>
 <li>./grafana/Sokkel_1.1-1693041894446.json</li>
