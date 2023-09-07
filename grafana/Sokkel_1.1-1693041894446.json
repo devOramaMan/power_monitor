@@ -362,7 +362,7 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 9,
+        "w": 6,
         "x": 0,
         "y": 6
       },
@@ -469,8 +469,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 9,
-        "x": 9,
+        "w": 6,
+        "x": 6,
         "y": 6
       },
       "id": 10,
@@ -532,6 +532,102 @@
         "type": "influxdb",
         "uid": "0u3H7Fh4k"
       },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "currencyNOK"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 12,
+        "y": 6
+      },
+      "id": 13,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "0u3H7Fh4k"
+          },
+          "query": "import \"date\"\r\nimport \"timezone\"\r\n\r\nfrom(bucket: \"Home\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"pw_price_nok\")\r\n\r\n\r\n   |> aggregateWindow(every: 1h, fn: sum)\r\n    ",
+          "refId": "A"
+        }
+      ],
+      "title": "Electricity prices",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "0u3H7Fh4k"
+      },
       "description": "Water boiler expenses are shared",
       "fieldConfig": {
         "defaults": {
@@ -567,8 +663,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 6,
-        "x": 18,
+        "w": 4,
+        "x": 20,
         "y": 6
       },
       "id": 11,
@@ -616,6 +712,6 @@
   "timezone": "",
   "title": "Sokkel_1.1",
   "uid": "4i2vz4C4z",
-  "version": 13,
+  "version": 15,
   "weekStart": ""
 }
