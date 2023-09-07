@@ -49,3 +49,6 @@ sudo /usr/share/influxdb/influxdb2-upgrade.sh
 
 <h5>Hardware schema:</h5>
 <li>./hw</li>
+
+<h5>Update influxdb with the power price for the next day once a day:</h5>
+<li>./power_price</li>
