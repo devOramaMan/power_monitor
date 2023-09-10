@@ -1,19 +1,21 @@
 #
 #start at startup
 #sudo vi /etc/rc.local
-#sudo python /home/lun/power_monitor/power_price/power_price_deamon.py &
+#sudo python -u /home/lun/power_monitor/power_price/power_price_deamon.py 2>&1 /home/lun/power_monitor/power_price/log.txt &
 #
 
-import requests
 from datetime import datetime, timedelta
+
+print("Starting el price process %s..." %  datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+import requests
+
 import time
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
 #Påslag øre i abonomang
 ABO_PRICE_KR=2.80/100
 MVA=1.25
-
-
 
 
 url = "http://192.168.10.137:8086"
@@ -44,7 +46,7 @@ def parse_price(url):
 
     file = r.json()
     for element in file:
-        val = (element['NOK_per_kWh']*ABO_PRICE_KR*MVA)
+        val = ((element['NOK_per_kWh']*MVA)+ABO_PRICE_KR)
         time = element['time_start'][:-6]+".0Z"
         p = influxdb_client.Point.measurement("pw_price_nok").field("val", val).time(time)
         write_api.write(bucket=bucket, org=orgid, record=p)
@@ -59,8 +61,8 @@ while(True):
         URL_HVA_KOSTER="https://www.hvakosterstrommen.no/api/v1/prices/%d/%.2d-%.2d_NO1.json" % (now.year, now.month,now.day )
         last = now
         parse_price(URL_HVA_KOSTER)
-    print("Sleep %s...\n" %  datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    print("Sleep %s..." %  datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     time.sleep(3600)
-    print("Wakeup %s...\n" %  datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    print("Wakeup %s..." %  datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 
