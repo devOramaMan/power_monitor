@@ -5,6 +5,8 @@
 #
 
 from datetime import datetime, timedelta
+import os
+import sys
 
 print("Starting el price process %s..." %  datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -13,6 +15,8 @@ import requests
 import time
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
+
+
 #Påslag øre i abonomang
 ABO_PRICE_KR=2.80/100
 MVA=1.25
@@ -52,17 +56,41 @@ def parse_price(url):
         write_api.write(bucket=bucket, org=orgid, record=p)
 
     return file
+if __name__ == "__main__":
+    exception_cnt = 0
+    last_exception = None
+    first_exception = None
+    last = datetime.now()
+    while(True):
+        now = datetime.now() + timedelta(days=1)
+        try:
+            if ( ((now - last).total_seconds()/3600 ) > 24 ) and ( now.hour > 19 ):
+                print("Update Db with electricity prices")
+                URL_HVA_KOSTER="https://www.hvakosterstrommen.no/api/v1/prices/%d/%.2d-%.2d_NO1.json" % (now.year, now.month,now.day )
+                last = now
+                parse_price(URL_HVA_KOSTER)
+                if exception_cnt:
+                    print("clear exception count %d" % exception_cnt)
+                    exception_cnt = 0
+            print("Sleep %s..." %  datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+            time.sleep(3600)
+            print("Wakeup %s..." %  datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        except Exception as err:
+            print("unexpected exception ocurred err: %s" % err)
 
-last = datetime.now()
-while(True):
-    now = datetime.now() + timedelta(days=1)
-    if ( ((now - last).total_seconds()/3600 ) > 24 ) and ( now.hour > 19 ):
-        print("Update Db with electricity prices")
-        URL_HVA_KOSTER="https://www.hvakosterstrommen.no/api/v1/prices/%d/%.2d-%.2d_NO1.json" % (now.year, now.month,now.day )
-        last = now
-        parse_price(URL_HVA_KOSTER)
-    print("Sleep %s..." %  datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    time.sleep(3600)
-    print("Wakeup %s..." %  datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+            if exception_cnt > 10: 
+                if ((now - first_exception).total_seconds()/3600 > 20):
+                    #restart process if more than 10 exceptions occurred
+                    #and it is less than 20 hours since the first exception
+                    os.execv(sys.argv[0], sys.argv)
+
+            if exception_cnt == 0:
+                first_exception = datetime.now()
+
+            exception_cnt += 1
+            
+            time.sleep(1300)
+            print("Wakeup from exception %s..." %  datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
 
 
