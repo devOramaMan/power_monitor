@@ -211,7 +211,7 @@
 				"script": "@8"
 			}
 		],
-		"authtoken": "azEnZHCUW24OFSszKP7x1JagkdfUCJeIA-0lduU-jzHhS-zDXu9FyQ9R6ICXdT8Q92GeQmgbBYIF_lNgU-PScQ==",
+		"authtoken": "",
 		"begdate": 1667257200
 	}
 }
